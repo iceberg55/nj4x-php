@@ -8,7 +8,7 @@ class Nj4xClient
 {
   protected $soap;
 
-  public __constructor(string $endpoint) {
+  public function __construct(string $endpoint) {
     $url_wsdl = 'http://' . $endpoint . ':7789/nj4x/ts?wsdl';
     $this->soap = new SoapClient($url_wsdl, array('location' => $url_wsdl, 'cache_wsdl' => WSDL_CACHE_NONE));
   }
@@ -41,7 +41,7 @@ class Nj4xClient
     return $ret;
   }
 
-  public function info() : string
+  public function info() : array
   {
     $token = $this->start_session('info');
 
@@ -53,7 +53,7 @@ class Nj4xClient
 
     $this->soap->close($array);
 
-    return $ret->return;
+    return (array)$ret->return;
   }
 
   public function run($srv, $account_number, $password, $config) : string
@@ -121,13 +121,13 @@ class Nj4xClient
   }
 
 
-  private function start_session($account_number) : string
+  private function start_session($id) : string
   {
     $array = array(
-      'clientInfo' => array(
-        'clientName' => 'fxs-' . $account_number,
+      'clientInfo' => [
+        'clientName' => 'fxs-' . $id,
         'apiVersion' => '2.6.6'
-      )
+      ]
     );
 
     return $this->soap->startSession($array)->return;

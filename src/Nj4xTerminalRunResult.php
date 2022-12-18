@@ -2,7 +2,7 @@
 
 namespace D4T\Nj4x;
 
-final class Nj4xRunResult
+final class Nj4xTerminalRunResult
 {
     private int $code;
     private ?string $message;

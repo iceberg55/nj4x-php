@@ -2,9 +2,8 @@
 
 namespace D4T\Nj4x;
 
-final class Nj4xRunResultType
+final class Nj4xTerminalRunResultType
 {
-
     const OK = 0;
     const FAILED_REPEATABLE = 1;
     const FAILED = 2;

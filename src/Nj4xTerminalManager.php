@@ -2,16 +2,15 @@
 
 namespace D4T\Nj4x;
 
-use D4T\Nj4x\Nj4xRunResult;
-
-use D4T\Nj4x\Nj4xTerminalRunResultType;
 use D4T\Nj4x\Nj4xClient;
+use D4T\Nj4x\Nj4xTerminalRunResult;
+use D4T\Nj4x\Nj4xTerminalRunResultType;
 
 class Nj4xTerminalManager
 {
 
-    public static function RunTerminal(string $endpoint, string $broker_server_name, 
-        int $account_number, string $password, $config[]) : Nj4xRunResult
+    public static function RunTerminal(string $endpoint, string $broker_server_name,
+        int $account_number, string $password, array $config = []) : Nj4xTerminalRunResult
     {
 
         try {
@@ -73,14 +72,16 @@ class Nj4xTerminalManager
         return $client->info();
     }
 
-    public static function Ping($endpoint)
+    public static function Ping($endpoint) : bool
     {
         try {
             $client = new Nj4xClient($endpoint);
             $client->info();
 
             return true;
-        } 
+        } catch(\Exception $e) {
+
+        }
 
         return false;
     }
