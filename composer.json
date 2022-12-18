@@ -1,0 +1,42 @@
+{
+    "name": "dev4traders/nj4x-php",
+    "description": "nj4x in PHP",
+    "keywords": [
+        "dev4traders",
+        "nj4x"
+    ],
+    "homepage": "https://github.com/dev4traders/nj4x-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikhail",
+            "email": "mikha.dev@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-soap": "*"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.3.1",
+        "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^1.9",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "D4T\\Nj4x\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "D4T\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
