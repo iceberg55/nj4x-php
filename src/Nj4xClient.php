@@ -7,15 +7,17 @@ use SoapClient;
 class Nj4xClient
 {
   protected $soap;
+  private $app;
 
-  public function __construct(string $endpoint) {
+  public function __construct(string $app, string $endpoint) {
     $url_wsdl = 'http://' . $endpoint . ':7789/nj4x/ts?wsdl';
     $this->soap = new SoapClient($url_wsdl, array('location' => $url_wsdl, 'cache_wsdl' => WSDL_CACHE_NONE));
+    $this->app = $app;
   }
 
-  public function stop($srv, $account_number, $password) : string {
+  public function stop(string $srv, int $account_number, string $password) : string {
 
-    $token = $this->start_session($account_number);
+    $token = $this->start_session('stop-'.$account_number);
 
     $array = array(
       'token' => $token,
@@ -56,7 +58,7 @@ class Nj4xClient
     return (array)$ret->return;
   }
 
-  public function run($srv, $account_number, $password, $config) : string
+  public function run(string $srv, int $account_number, string $password, string $config) : string
   {
     $token = $this->start_session($account_number);
 
@@ -92,9 +94,9 @@ class Nj4xClient
     return $ret;
   }
 
-  public function check($srv, $account_number, $password) : string
+  public function check(string $srv, int $account_number, string $password) : string
   {
-    $token = $this->start_session($account_number);
+    $token = $this->start_session('check-'.$account_number);
 
     $array = array(
       'token' => $token,
@@ -121,11 +123,11 @@ class Nj4xClient
   }
 
 
-  private function start_session($id) : string
+  private function start_session(string $command) : string
   {
     $array = array(
       'clientInfo' => [
-        'clientName' => 'fxs-' . $id,
+        'clientName' => $this->app. '-' . $command,
         'apiVersion' => '2.6.6'
       ]
     );

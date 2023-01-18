@@ -9,12 +9,12 @@ use D4T\Nj4x\Nj4xTerminalRunResultType;
 class Nj4xTerminalManager
 {
 
-    public static function RunTerminal(string $endpoint, string $broker_server_name,
+    public static function RunTerminal(string $app, string $endpoint, string $broker_server_name,
         int $account_number, string $password, array $config = []) : Nj4xTerminalRunResult
     {
 
         try {
-            $client = new Nj4xClient($endpoint);
+            $client = new Nj4xClient($app, $endpoint);
 
             $config = json_encode($config);
 
@@ -65,17 +65,17 @@ class Nj4xTerminalManager
         return new Nj4xTerminalRunResult(Nj4xTerminalRunResultType::FAILED, 'Unhandled Error.' . $ret);
     }
 
-    public static function GetHostInfo($endpoint) : mixed
+    public static function GetHostInfo(string $app, string $endpoint) : mixed
     {
-        $client = new Nj4xClient($endpoint);
+        $client = new Nj4xClient($app, $endpoint);
 
-        return $client->info();
+        return $client->info($app);
     }
 
-    public static function Ping($endpoint) : bool
+    public static function Ping(string $app, string $endpoint) : bool
     {
         try {
-            $client = new Nj4xClient($endpoint);
+            $client = new Nj4xClient($app, $endpoint);
             $client->info();
 
             return true;
@@ -86,10 +86,10 @@ class Nj4xTerminalManager
         return false;
     }
 
-    public static function StopTerminal($endpoint, $broker_server_name, $account_number, $password) : Nj4xTerminalRunResult
+    public static function StopTerminal(string $app, string $endpoint, string $broker_server_name, int $account_number, string $password) : Nj4xTerminalRunResult
     {
         try {
-            $client = new Nj4xClient($endpoint);
+            $client = new Nj4xClient($app, $endpoint);
 
             $ret = $client->stop($broker_server_name, $account_number, $password);
 
@@ -113,11 +113,11 @@ class Nj4xTerminalManager
         return new Nj4xTerminalRunResult(Nj4xTerminalRunResultType::OK);
     }
 
-    public static function CheckTerminal($endpoint, $broker_server_name, $account_number, $password)
+    public static function CheckTerminal(string $app, string $endpoint, string $broker_server_name, int $account_number, string $password)
     {
 
         try {
-            $client = new Nj4xClient($endpoint);
+            $client = new Nj4xClient($app, $endpoint);
 
             $ret = $client->check($broker_server_name, $account_number, $password);
             if (
